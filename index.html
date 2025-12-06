@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>极简Qt - Qt软件定制开发服务商</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* 基础样式 - 保持不变 */
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2d6bcb;
+            --accent-color: #00c4cc;
+            --light-color: #ffffff;
+            --dark-color: #2d3748;
+            --text-color: #4a5568;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --border-radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--light-color);
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            font-weight: 600;
+        }
+        
+        h1 {
+            font-size: 3rem;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+        
+        .btn-accent {
+            background-color: var(--accent-color);
+        }
+        
+        .btn-accent:hover {
+            background-color: #00a8b0;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--secondary-color);
+        }
+        
+        /* 导航栏 - 更新了Logo样式 */
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-img {
+            height: 40px;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 如果使用文字Logo的备选方案 */
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: none; /* 默认隐藏文字Logo，使用图片Logo */
+        }
+        
+        .logo-text span {
+            color: var(--secondary-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero 区域 */
+        .hero {
+            position: relative;
+            color: white;
+            padding: 220px 0 150px;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(26, 54, 93, 0.85) 0%, rgba(45, 107, 203, 0.75) 100%);
+            z-index: -1;
+        }
+        
+        .hero h1 {
+            color: white;
+            font-size: 3.8rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            opacity: 0.9;
+        }
+        
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        /* 服务区域 */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-icon {
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+        
+        /* 我们的优势区域 */
+        .strengths {
+            background-color: #f7fafc;
+            padding: 80px 0;
+        }
+        
+        .strengths-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .strength-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .strength-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .strength-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .strength-card h3 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .strength-content ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .strength-content li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .strength-content li:before {
+            content: "•";
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .tech-tag {
+            background-color: #e8f4fd;
+            color: var(--secondary-color);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        /* 案例区域 */
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .case-card {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: white;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .case-img {
+            height: 200px;
+            background-color: #f7fafc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .case-content {
+            padding: 20px;
+        }
+        
+        .case-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .case-feature-tag {
+            background-color: #f1f5f9;
+            color: var(--text-color);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .case-highlight {
+            background-color: #e8f4fd;
+            border-left: 3px solid var(--accent-color);
+            padding: 10px 15px;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+        }
+        
+        /* 流程区域 */
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 50px;
+        }
+        
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            z-index: 1;
+        }
+        
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        /* 合作伙伴区域 */
+        .partners {
+            background-color: #f7fafc;
+            padding: 80px 0;
+        }
+        
+        .partners h2 {
+            color: var(--primary-color);
+        }
+        
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .partner-item {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .partner-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .partner-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            color: white;
+        }
+        
+        /* 为每个合作伙伴设置不同的图标颜色 */
+        .partner-1 .partner-icon {
+            background-color: #c9302c; /* 中国石油 - 红色 */
+        }
+        
+        .partner-2 .partner-icon {
+            background-color: #1e6bb8; /* 浙江大学 - 蓝色 */
+        }
+        
+        .partner-3 .partner-icon {
+            background-color: #f0ad4e; /* 河北工业大学 - 橙色 */
+        }
+        
+        .partner-4 .partner-icon {
+            background-color: #5cb85c; /* 北京汽车 - 绿色 */
+        }
+        
+        .partner-5 .partner-icon {
+            background-color: #5bc0de; /* 南方航空 - 浅蓝色 */
+        }
+        
+        .partner-6 .partner-icon {
+            background-color: #6f42c1; /* 高思教育 - 紫色 */
+        }
+        
+        .partner-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .partner-item p {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            margin: 0;
+        }
+        
+        /* CTA 区域 */
+        .cta {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            text-align: center;
+            padding: 80px 0;
+        }
+        
+        .cta h2 {
+            color: white;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #2d3748;
+            color: #cbd5e0;
+            font-size: 0.9rem;
+        }
+        
+        /* 微信二维码悬浮框 */
+        .wechat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+        }
+        
+        .wechat-toggle {
+            width: 60px;
+            height: 60px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .wechat-toggle:hover {
+            background-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+        
+        .wechat-qr {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 180px;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .wechat-qr.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .wechat-qr img {
+            width: 150px;
+            height: 150px;
+            display: block;
+            margin: 0 auto 10px;
+            border-radius: 4px;
+        }
+        
+        .wechat-qr p {
+            font-size: 0.9rem;
+            color: var(--dark-color);
+            margin: 0;
+        }
+        
+        .wechat-qr::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 20px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid white;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .hero {
+                padding: 180px 0 100px;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.3rem;
+            }
+            
+            .logo-img {
+                height: 35px; /* 移动端稍微调小Logo */
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: white;
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 10px 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+                margin-bottom: 10px;
+            }
+            
+            .strengths-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .strength-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .strength-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .process-steps::before {
+                display: none;
+            }
+            
+            .partners-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 20px;
+            }
+            
+            .partner-item {
+                padding: 20px 15px;
+            }
+            
+            .partner-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+            }
+            
+            .partner-item h3 {
+                font-size: 1.1rem;
+            }
+            
+            .wechat-widget {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .wechat-qr {
+                width: 160px;
+                padding: 12px;
+            }
+            
+            .wechat-qr img {
+                width: 135px;
+                height: 135px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 - 已添加Logo图片 -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo-container">
+                    <!-- 极简Qt Logo图片 -->
+                    <a href="#" class="logo-link">
+                        <img src="https://via.placeholder.com/150x50/1a365d/ffffff?text=极简Qt+Logo" alt="极简Qt" class="logo-img">
+                    </a>
+                    <!-- 备选文字Logo（图片无法加载时显示） -->
+                    <a href="#" class="logo-text">极简<span>Qt</span></a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#services">服务项目</a></li>
+                    <li><a href="#strengths">我们的优势</a></li>
+                    <li><a href="#cases">成功案例</a></li>
+                    <li><a href="#process">开发流程</a></li>
+                    <li><a href="#partners">合作伙伴</a></li>
+                    <li><a href="#contact" class="btn btn-accent">联系我们</a></li>
+                </ul>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero 区域 -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <h1>Qt让数字化更简单</h1>
+            <p>专业的Qt软件开发服务商、Qt软件定制开发、北京软件外包公司</p>
+            <div class="hero-btns">
+                <a href="#contact" class="btn btn-accent">立即咨询</a>
+                <a href="#cases" class="btn btn-outline">查看案例</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务区域 -->
+    <section id="services">
+        <div class="container">
+            <h2>服务项目</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Qt桌面应用开发</h3>
+                    <p>基于Qt框架的跨平台桌面应用程序开发，支持Windows、macOS和Linux系统，提供原生性能体验。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>服务端软件开发</h3>
+                    <p>基于Windows/Linux的C++服务端后台开发，性能优越，跨平台一致性，满足高并发、高性能的业务需求。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3>嵌入式Qt开发</h3>
+                    <p>针对嵌入式设备的Qt应用开发，优化性能和资源占用，适用于工业控制、医疗设备等领域。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3>行业软件开发</h3>
+                    <p>专注于工业自动化软件、汽车软件、消费类电子、医疗设备软件、物联网软件等行业应用软件开发。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cubes"></i>
+                    </div>
+                    <h3>定制组件开发</h3>
+                    <p>开发定制化的Qt组件和控件，满足特定业务需求，提升应用功能和用户体验。</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>技术支持和维护</h3>
+                    <p>提供长期的技术支持、维护和升级服务，确保您的应用始终保持最佳状态。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 我们的优势区域 -->
+    <section id="strengths" class="strengths">
+        <div class="container">
+            <h2>我们的优势</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 50px;">极简Qt团队拥有深厚的Qt开发技术积累和丰富的行业实践经验，为您提供专业可靠的软件定制开发服务</p>
+            
+            <div class="strengths-grid">
+                <!-- 优势1：精通开发技术 -->
+                <div class="strength-card">
+                    <div class="strength-header">
+                        <div class="strength-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>精通开发技术</h3>
+                    </div>
+                    <div class="strength-content">
+                        <p>掌握全面的Qt开发技术栈，确保高质量项目交付：</p>
+                        <ul>
+                            <li>核心语言：C++、Python</li>
+                            <li>开发框架：Qt、PyQt、Qt Quick</li>
+                            <li>数据库：MySQL、SQLite、PostgreSQL</li>
+                            <li>前端技术：QML、JavaScript</li>
+                            <li>版本控制：Git、SVN</li>
+                        </ul>
+                        <div class="tech-tags">
+                            <span class="tech-tag">C++</span>
+                            <span class="tech-tag">Qt</span>
+                            <span class="tech-tag">PyQt</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">数据库</span>
+                            <span class="tech-tag">QML</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 优势2：全平台覆盖 -->
+                <div class="strength-card">
+                    <div class="strength-header">
+                        <div class="strength-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <h3>全平台覆盖能力</h3>
+                    </div>
+                    <div class="strength-content">
+                        <p>提供全面的跨平台开发解决方案：</p>
+                        <ul>
+                            <li>桌面平台：Windows、Linux、macOS</li>
+                            <li>移动平台：Android、iOS</li>
+                            <li>嵌入式系统：各类Linux嵌入式系统</li>
+                            <li>国产化平台：中标麒麟、银河麒麟、统信UOS</li>
+                            <li>服务器环境：Linux、Windows Server</li>
+                        </ul>
+                        <div class="tech-tags">
+                            <span class="tech-tag">Windows</span>
+                            <span class="tech-tag">Linux</span>
+                            <span class="tech-tag">macOS</span>
+                            <span class="tech-tag">Android</span>
+                            <span class="tech-tag">iOS</span>
+                            <span class="tech-tag">国产化</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 优势3：丰富的行业经验 -->
+                <div class="strength-card">
+                    <div class="strength-header">
+                        <div class="strength-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <h3>丰富的行业经验</h3>
+                    </div>
+                    <div class="strength-content">
+                        <p>深耕Qt开发领域多年，具备丰富实战经验：</p>
+                        <ul>
+                            <li>核心团队15年以上Qt开发经验</li>
+                            <li>覆盖工业控制、医疗设备、金融、教育等行业</li>
+                            <li>成功交付100+个Qt项目</li>
+                            <li>与知名企业、高校长期合作</li>
+                            <li>持续跟踪并应用Qt最新技术</li>
+                        </ul>
+                        <div class="tech-tags">
+                            <span class="tech-tag">15年经验</span>
+                            <span class="tech-tag">多行业覆盖</span>
+                            <span class="tech-tag">100+项目</span>
+                            <span class="tech-tag">长期合作</span>
+                            <span class="tech-tag">技术前沿</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 案例区域 -->
+    <section id="cases">
+        <div class="container">
+            <h2>成功案例</h2>
+            <div class="cases-grid">
+                <div class="case-card">
+                    <div class="case-img">
+                        <i class="fas fa-industry" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="case-content">
+                        <h3>工业自动化控制系统</h3>
+                        <p>为制造业客户开发的跨平台工业控制软件，提供实时数据监控和设备控制功能，大幅提升生产效率。</p>
+                        <div class="case-features">
+                            <span class="case-feature-tag">实时监控</span>
+                            <span class="case-feature-tag">设备控制</span>
+                            <span class="case-feature-tag">跨平台</span>
+                            <span class="case-feature-tag">高效生产</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <div class="case-img">
+                        <i class="fas fa-cloud" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="case-content">
+                        <h3>工业物联网平台</h3>
+                        <p>为制造企业打造的综合性工业物联网平台，实现多种设备的数据采集、预处理、传输和命令下发，支持TB级数据存储与管理，提供大数据分析及Web/App展示应用。</p>
+                        <div class="case-features">
+                            <span class="case-feature-tag">数据采集</span>
+                            <span class="case-feature-tag">TB级存储</span>
+                            <span class="case-feature-tag">大数据分析</span>
+                            <span class="case-feature-tag">多端展示</span>
+                            <span class="case-feature-tag">命令下发</span>
+                        </div>
+                        <div class="case-highlight">
+                            <i class="fas fa-award" style="color: #f0ad4e; margin-right: 5px;"></i>
+                            该项目因卓越的技术实现和商业价值，被评为客户年度优秀项目
+                        </div>
+                    </div>
+                </div>
+                <div class="case-card">
+                    <div class="case-img">
+                        <i class="fas fa-chart-line" style="font-size: 3rem;"></i>
+                    </div>
+                    <div class="case-content">
+                        <h3>金融交易平台</h3>
+                        <p>为金融机构开发的实时交易平台，提供高性能的数据处理和可视化功能，确保交易安全稳定。</p>
+                        <div class="case-features">
+                            <span class="case-feature-tag">实时交易</span>
+                            <span class="case-feature-tag">数据处理</span>
+                            <span class="case-feature-tag">安全稳定</span>
+                            <span class="case-feature-tag">可视化</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 流程区域 -->
+    <section id="process">
+        <div class="container">
+            <h2>开发流程</h2>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>需求分析</h3>
+                    <p>深入了解客户需求，确定项目目标和范围</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>方案设计</h3>
+                    <p>制定技术方案和UI/UX设计，确定开发计划</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>开发实现</h3>
+                    <p>按照计划进行开发，定期沟通进度</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>测试优化</h3>
+                    <p>全面测试和性能优化，确保产品质量</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h3>部署上线</h3>
+                    <p>部署到目标平台，提供技术支持和维护</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 合作伙伴区域 -->
+    <section id="partners" class="partners">
+        <div class="container">
+            <h2>合作伙伴</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">我们与各行业领先企业及高校建立长期合作关系，共同推动Qt技术在各领域的创新应用</p>
+            <div class="partners-grid">
+                <div class="partner-item partner-1">
+                    <div class="partner-icon">
+                        <i class="fas fa-oil-can"></i>
+                    </div>
+                    <h3>中国石油</h3>
+                    <p>能源行业合作</p>
+                </div>
+                <div class="partner-item partner-2">
+                    <div class="partner-icon">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <h3>浙江大学</h3>
+                    <p>高校科研合作</p>
+                </div>
+                <div class="partner-item partner-3">
+                    <div class="partner-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>河北工业大学</h3>
+                    <p>工程技术合作</p>
+                </div>
+                <div class="partner-item partner-4">
+                    <div class="partner-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3>北京汽车</h3>
+                    <p>汽车行业合作</p>
+                </div>
+                <div class="partner-item partner-5">
+                    <div class="partner-icon">
+                        <i class="fas fa-plane"></i>
+                    </div>
+                    <h3>南方航空</h3>
+                    <p>航空行业合作</p>
+                </div>
+                <div class="partner-item partner-6">
+                    <div class="partner-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>高思教育</h3>
+                    <p>教育行业合作</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA 区域 -->
+    <section id="contact" class="cta">
+        <div class="container">
+            <h2>开始您的Qt项目</h2>
+            <p>无论您是需要开发新应用还是优化现有系统，我们的Qt专家团队都能为您提供专业的解决方案。</p>
+            <a href="#contact-form" class="btn btn-accent">立即咨询</a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>极简Qt</h3>
+                    <p>专业的Qt软件定制开发服务商，致力于为客户提供高质量的跨平台应用解决方案。</p>
+                </div>
+                <div class="footer-column">
+                    <h3>服务项目</h3>
+                    <ul class="footer-links">
+                        <li><a href="#services">桌面应用开发</a></li>
+                        <li><a href="#services">服务端开发</a></li>
+                        <li><a href="#services">嵌入式开发</a></li>
+                        <li><a href="#services">行业软件开发</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系信息</h3>
+                    <ul class="footer-links">
+                        <li><a href="tel:186-1118-2812"><i class="fas fa-phone"></i> 186-1118-2812</a></li>
+                        <li><a href="mailto:support@EasyQt.com"><i class="fas fa-envelope"></i> support@EasyQt.com</a></li>
+                        <li><a href="https://maps.google.com/?q=北京市海淀区上地软件园" target="_blank"><i class="fas fa-map-marker-alt"></i> 北京市海淀区上地软件园</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>关注我们</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fab fa-weixin"></i> 微信公众号</a></li>
+                        <li><a href="#"><i class="fab fa-weibo"></i> 新浪微博</a></li>
+                        <li><a href="#"><i class="fab fa-github"></i> GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 极简Qt 软件定制开发. 保留所有权利. easyqt.com | 京ICP备15021890号-1</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 微信二维码悬浮框 -->
+    <div class="wechat-widget">
+        <div class="wechat-toggle">
+            <i class="fab fa-weixin"></i>
+        </div>
+        <div class="wechat-qr">
+            <!-- 这里替换为您实际的微信二维码图片 -->
+            <img src="https://via.placeholder.com/150x150?text=微信二维码" alt="极简Qt微信二维码">
+            <p>扫码添加微信</p>
+        </div>
+    </div>
+
+    <script>
+        // 移动端菜单切换
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动端菜单
+                    document.querySelector('.nav-links').classList.remove('active');
+                }
+            });
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'white';
+                header.style.backdropFilter = 'none';
+            }
+        });
+
+        // 微信二维码显示/隐藏
+        const wechatToggle = document.querySelector('.wechat-toggle');
+        const wechatQr = document.querySelector('.wechat-qr');
+        
+        wechatToggle.addEventListener('click', function() {
+            wechatQr.classList.toggle('active');
+        });
+        
+        // 点击页面其他地方隐藏微信二维码
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.wechat-widget')) {
+                wechatQr.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
