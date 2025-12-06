@@ -110,15 +110,16 @@
             color: var(--secondary-color);
         }
         
-        /* 导航栏 - 更新了Logo样式 */
+        /* 导航栏 - 优化样式 */
         header {
-            background-color: white;
-            box-shadow: var(--shadow);
+            background-color: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
         }
         
         nav {
@@ -134,7 +135,7 @@
         }
         
         .logo-img {
-            height: 40px;
+            height: 42px;
             width: auto;
             transition: all 0.3s ease;
         }
@@ -159,27 +160,70 @@
         .nav-links {
             display: flex;
             list-style: none;
+            align-items: center;
         }
         
         .nav-links li {
-            margin-left: 30px;
+            margin-left: 35px;
+            position: relative;
         }
         
-        .nav-links a {
+        .nav-links li:not(:last-child) a {
             text-decoration: none;
             color: var(--dark-color);
             font-weight: 500;
             transition: color 0.3s ease;
+            padding: 8px 0;
+            position: relative;
         }
         
-        .nav-links a:hover {
+        .nav-links li:not(:last-child) a:hover {
             color: var(--secondary-color);
+        }
+        
+        .nav-links li:not(:last-child) a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary-color);
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links li:not(:last-child) a:hover::after {
+            width: 100%;
+        }
+        
+        /* 导航栏中的联系按钮优化 */
+        .nav-contact-btn {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 28px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(45, 107, 203, 0.2);
+        }
+        
+        .nav-contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(45, 107, 203, 0.3);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
         }
         
         .menu-toggle {
             display: none;
             font-size: 1.5rem;
             cursor: pointer;
+            color: var(--primary-color);
         }
         
         /* Hero 区域 */
@@ -659,6 +703,17 @@
         }
         
         /* 响应式设计 */
+        @media (max-width: 992px) {
+            .nav-links li {
+                margin-left: 25px;
+            }
+            
+            .nav-contact-btn {
+                padding: 8px 22px;
+                font-size: 0.9rem;
+            }
+        }
+        
         @media (max-width: 768px) {
             h1 {
                 font-size: 2.5rem;
@@ -693,7 +748,9 @@
                 background-color: white;
                 flex-direction: column;
                 padding: 20px;
-                box-shadow: var(--shadow);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                border-radius: 0 0 10px 10px;
+                z-index: 999;
             }
             
             .nav-links.active {
@@ -701,7 +758,31 @@
             }
             
             .nav-links li {
-                margin: 10px 0;
+                margin: 0 0 15px 0;
+                width: 100%;
+            }
+            
+            .nav-links li:last-child {
+                margin-top: 10px;
+                margin-bottom: 0;
+            }
+            
+            .nav-links li:not(:last-child) a {
+                display: block;
+                padding: 12px 0;
+                border-bottom: 1px solid #f1f5f9;
+            }
+            
+            .nav-links li:not(:last-child) a::after {
+                display: none;
+            }
+            
+            .nav-contact-btn {
+                width: 100%;
+                text-align: center;
+                padding: 12px 0;
+                border-radius: 6px;
+                margin-top: 10px;
             }
             
             .menu-toggle {
@@ -776,6 +857,16 @@
                 height: 135px;
             }
         }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -797,7 +888,7 @@
                     <li><a href="#cases">成功案例</a></li>
                     <li><a href="#process">开发流程</a></li>
                     <li><a href="#partners">合作伙伴</a></li>
-                    <li><a href="#contact" class="btn btn-accent">联系我们</a></li>
+                    <li><a href="#contact" class="nav-contact-btn">联系我们</a></li>
                 </ul>
                 <div class="menu-toggle">
                     <i class="fas fa-bars"></i>
@@ -1200,12 +1291,14 @@
         // 导航栏滚动效果
         window.addEventListener('scroll', function() {
             const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
                 header.style.backdropFilter = 'blur(10px)';
             } else {
-                header.style.background = 'white';
-                header.style.backdropFilter = 'none';
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 15px rgba(0, 0, 0, 0.08)';
+                header.style.backdropFilter = 'blur(10px)';
             }
         });
 
