@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://datarealm.cn/sitemap.xml
+Sitemap: https://www.datarealm.cn/sitemap.xml
