@@ -64,7 +64,7 @@
           <div class="nav-panel">
             <div class="nav-panel-title">认识数境本体平台</div>
             <div class="nav-panel-grid">
-              <a href="../product/"><strong>产品概览</strong><small>一套语义底座，承载多种业务能力</small></a>
+              <a href="../product/#architecture"><strong>产品架构</strong><small>从基础设施到业务应用的分层架构</small></a>
               <a href="../product/#ontology"><strong>可运营本体</strong><small>从业务描述走向业务运行</small></a>
               <a href="../product/#how"><strong>工作原理</strong><small>从多源信息到业务行动</small></a>
               <a href="../product/#products"><strong>产品矩阵</strong><small>一套底座支撑多类业务应用</small></a>
@@ -98,7 +98,47 @@
       <div class="chapter">产品</div>
       <h1 id="page-title">数境本体平台，<br>让业务<em>可理解、可运行。</em></h1>
       <p class="section-lead">数境以可运营本体为核心，将数据库、文件与业务文档连接为统一的业务模型，并在同一套语义底座上支撑穿透监管、智能分析和业务智能体。</p>
-      <nav class="page-anchors" aria-label="本页目录"><a href="#ontology">可运营本体</a><a href="#how">工作原理</a><a href="#products">产品矩阵</a><a href="#capabilities">平台能力</a><a href="#governance">技术与治理</a></nav>
+      <nav class="page-anchors" aria-label="本页目录"><a href="#architecture">产品架构</a><a href="#ontology">可运营本体</a><a href="#how">工作原理</a><a href="#products">产品矩阵</a><a href="#capabilities">平台能力</a><a href="#governance">技术与治理</a></nav>
+    </div></section>
+    <section class="platform-arch" id="architecture" aria-labelledby="architecture-title"><div class="wrap">
+      <div class="section-head"><div><div class="chapter">产品 / <span class="chapter-cn">产品架构</span></div><h2 class="section-title" id="architecture-title" style="margin-top:22px">从基础设施到业务应用，<br>一套分层的平台架构。</h2></div><p class="section-copy">底层是可私有化部署的基础设施，中间是通用本体平台与业务建模两层语义底座，上层是按需组合的业务应用。安全治理与智能体能力贯穿各层。</p></div>
+      <div class="arch-stack">
+        <aside class="arch-pillar arch-pillar-gov" aria-labelledby="pillar-gov-title">
+          <h3 id="pillar-gov-title"><span>贯穿各层</span>安全与治理</h3>
+          <ul><li>统一认证<small>OAuth 2.0 · OIDC · 单点登录</small></li><li>细粒度权限<small>ABAC 策略 · OPA</small></li><li>组织与数据范围<small>按组织、角色控制可见范围</small></li><li>审计日志<small>只追加、可追溯</small></li><li>版本与血缘<small>模型变更与数据来源</small></li></ul>
+        </aside>
+        <div class="arch-layer arch-apps">
+          <div class="arch-layer-head"><span>04</span><h3>业务应用平台</h3><p>在同一底座上按需组合</p></div>
+          <div class="arch-apps-grid">
+            <article><h4>穿透监管</h4><ul><li>监管规则中心</li><li>场景与执行指令</li><li>证据链与关系路径</li><li>问题清单与整改督办</li><li>监管报告</li></ul></article>
+            <article><h4>智能分析</h4><ul><li>自然语言问数</li><li>分析模型与指标</li><li>图谱探索</li><li>趋势洞察与预警</li><li>智能报表</li></ul></article>
+            <article><h4>智能运营</h4><ul><li>运营驾驶舱</li><li>数字员工任务</li><li>流程工作台</li><li>运营策略与告警</li></ul></article>
+            <article><h4>双重预防</h4><ul><li>风险分级管控</li><li>隐患排查治理</li><li>整改验收闭环</li><li>移动巡检</li><li>统计与合规</li></ul></article>
+            <article class="arch-app-more"><h4>+ N</h4><p>更多行业应用，复用已沉淀的对象、规则与能力</p></article>
+          </div>
+        </div>
+        <div class="arch-layer arch-bm">
+          <div class="arch-layer-head"><span>03</span><h3>业务建模</h3><p>业务语义内核</p></div>
+          <ul class="arch-chips"><li>业务领域与组织岗位</li><li>流程模板与编排</li><li>治理规则与规则集</li><li>业务能力 Skill</li><li>事件与信号</li><li>数字员工与智能体定义</li><li>报告模板</li></ul>
+        </div>
+        <div class="arch-layer arch-onto">
+          <div class="arch-layer-head"><span>02</span><h3>通用本体平台</h3><p>可运营本体 · 语义底座</p></div>
+          <ul class="arch-chips"><li>多源接入与结构抽取</li><li>IR 中间表示</li><li>本体建模<small>对象 · 属性 · 关系 · 接口</small></li><li>SKOS 术语治理</li><li>Schema 映射与实例化</li><li>统一对象查询</li><li>图查询与推理<small>Cypher · SPARQL · SHACL</small></li><li>版本与发布</li><li>知识地图</li></ul>
+        </div>
+        <aside class="arch-pillar arch-pillar-ai" aria-labelledby="pillar-ai-title">
+          <h3 id="pillar-ai-title"><span>贯穿各层</span>智能体与大模型</h3>
+          <ul><li>MCP 工具服务<small>本体查询 · 动作 · 流程</small></li><li>本体上下文注入<small>OAG，让模型理解业务</small></li><li>多模型网关<small>模型无关 · 限流 · 成本追踪</small></li><li>Skill 与脚本沙箱<small>隔离执行 · 审批发布</small></li><li>人工确认<small>关键操作留痕</small></li></ul>
+        </aside>
+        <div class="arch-layer arch-sources">
+          <div class="arch-layer-head"><span>01</span><h3>数据来源</h3><p>客户现有系统，数据留在原处，通过映射理解</p></div>
+          <ul class="arch-chips"><li>业务数据库</li><li>Excel / CSV 文件</li><li>制度与业务文档</li><li>业务系统接口</li><li>传感器与时序数据</li></ul>
+        </div>
+        <div class="arch-layer arch-infra">
+          <div class="arch-layer-head"><span>00</span><h3>IT 基础设施</h3><p>私有化部署 · 容器化</p></div>
+          <ul class="arch-chips"><li>图数据库<small>Neo4j</small></li><li>关系数据库<small>PostgreSQL</small></li><li>全文检索<small>Elasticsearch</small></li><li>时序分析<small>ClickHouse</small></li><li>事件总线<small>Kafka</small></li><li>缓存<small>Redis</small></li><li>对象存储<small>MinIO</small></li><li>工作流<small>Temporal</small></li><li>容器编排<small>Docker · Kubernetes</small></li><li>可观测<small>Prometheus · Grafana · OpenTelemetry</small></li></ul>
+        </div>
+      </div>
+      <div class="arch-note"><span>下层为上层提供能力，上层不重复定义下层的业务语义。</span><span>新增应用基于同一底座构建，不必重新理解数据。</span></div>
     </div></section>
     <section class="ontology-model" id="ontology" aria-labelledby="ontology-model-title"><div class="wrap">
       <div class="section-head"><div><div class="chapter">产品 / <span class="chapter-cn">可运营本体</span></div><h2 class="section-title" id="ontology-model-title" style="margin-top:22px">不是一张关系图，<br>而是一套运行中的业务语言。</h2></div><p class="section-copy">数境将业务定义、真实数据、判断逻辑与行动边界组织在同一个模型中。本体不只是描述世界，也参与查询、决策与执行。</p></div>

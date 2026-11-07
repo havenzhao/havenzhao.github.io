@@ -97,3 +97,40 @@ header{position:sticky;top:0;z-index:20;background:rgba(247,248,244,.94);backdro
 @media(max-width:1100px){.nav-item.is-current .nav-trigger:after,.nav-direct[aria-current="page"]:after{left:11px;right:11px}.arch-grid{grid-template-columns:1fr 1fr}.detail-grid{grid-template-columns:1fr 1fr;gap:40px}.detail-intro{grid-column:1/-1}}
 @media(max-width:760px){.nav-item.is-current .nav-trigger:after,.nav-direct[aria-current="page"]:after{display:none}.page-hero{padding:56px 0 46px}.page-hero h1{font-size:clamp(34px,9vw,48px);letter-spacing:-1px}.page-anchors{margin-top:28px;gap:8px}.page-anchors a{padding:7px 12px;font-size:12px}.home-arch,.solution-detail{padding:65px 0}.arch-card{min-height:0;padding:24px 20px}.detail-grid{grid-template-columns:1fr;gap:30px}.detail-col li{font-size:13px}.section-more{justify-content:flex-start}.contact-page{padding:60px 0}.contact-topics{padding:56px 0 64px}}
 @media(max-width:420px){.arch-grid{grid-template-columns:1fr}}
+
+/* ---------- 2026-11 产品页：分层产品架构图 ---------- */
+.platform-arch{padding:110px 0 100px;background:#fff;border-bottom:1px solid var(--line)}
+.arch-stack{display:grid;grid-template-columns:170px minmax(0,1fr) 170px;grid-template-areas:"gov apps ai" "gov bm ai" "gov onto ai" "src src src" "infra infra infra";gap:10px;margin-top:8px}
+.arch-pillar-gov{grid-area:gov}.arch-pillar-ai{grid-area:ai}.arch-apps{grid-area:apps}.arch-bm{grid-area:bm}.arch-onto{grid-area:onto}.arch-sources{grid-area:src}.arch-infra{grid-area:infra}
+.arch-stack ul{margin:0;padding:0;list-style:none}
+.arch-stack small{color:var(--muted);font-size:10px}
+.arch-layer{display:grid;grid-template-columns:150px minmax(0,1fr);gap:20px;align-items:center;padding:22px 24px;border:1px solid var(--line)}
+.arch-layer-head span{font-family:Consolas,monospace;font-size:10px;letter-spacing:1px;color:#91a397}
+.arch-layer-head h3{margin-top:4px;font-size:17px;font-weight:500;line-height:1.4}
+.arch-layer-head p{margin-top:4px;color:var(--muted);font-size:11px;line-height:1.6}
+.arch-chips{display:flex;flex-wrap:wrap;gap:8px}
+.arch-chips li{padding:7px 12px;background:#fff;border:1px solid #d6dfd2;font-size:12px;line-height:1.5}
+.arch-chips small{margin-left:6px}
+.arch-apps{background:#fff}
+.arch-apps-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr)) minmax(0,.75fr);gap:8px}
+.arch-apps-grid article{padding:16px 14px;background:#f6f8f3;border:1px solid #dfe6dc}
+.arch-apps-grid h4{margin:0 0 10px;font-size:15px;font-weight:500;color:var(--green)}
+.arch-apps-grid li{padding:5px 0;border-top:1px solid #e6ece3;font-size:12px;line-height:1.5;color:var(--text)}
+.arch-app-more{display:flex;flex-direction:column;justify-content:center;background:transparent!important;border-style:dashed!important}
+.arch-app-more p{font-size:11px;line-height:1.7;color:var(--muted)}
+.arch-bm{background:var(--mint);border-color:#cfdcc9}
+.arch-onto{background:var(--ink);border-color:var(--ink);color:#fff}
+.arch-onto .arch-layer-head span{color:#91a69a}.arch-onto .arch-layer-head p{color:#b7c3bc}
+.arch-onto .arch-chips li{background:rgba(255,255,255,.06);border-color:#496056;color:#e8efe9}
+.arch-onto small{color:#9fb5a8}
+.arch-sources{border-style:dashed;border-color:#b9c8b4;background:transparent}
+.arch-infra{background:#eef2ea;border-color:#d6dfd2}
+.arch-pillar{padding:20px 18px;background:#f6f8f3;border:1px solid var(--line);border-top:2px solid var(--green)}
+.arch-pillar h3{font-size:16px;font-weight:500;line-height:1.4}
+.arch-pillar h3 span{display:block;margin-bottom:4px;color:var(--muted);font-size:10px;letter-spacing:1px;font-weight:400}
+.arch-pillar ul{margin-top:14px}
+.arch-pillar li{padding:10px 0;border-top:1px solid var(--line);font-size:13px;line-height:1.5}
+.arch-pillar li small{display:block;margin-top:2px;line-height:1.5}
+.arch-note{display:flex;justify-content:space-between;gap:24px;margin-top:20px;color:var(--muted);font-size:11px}
+@media(max-width:1100px){.arch-stack{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"apps apps" "bm bm" "onto onto" "gov ai" "src src" "infra infra"}.arch-layer{grid-template-columns:120px minmax(0,1fr)}.arch-apps-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.arch-app-more{grid-column:1/-1;flex-direction:row;align-items:center;gap:14px;padding:10px 14px!important}.arch-app-more h4{margin:0}}
+@media(max-width:760px){.platform-arch{padding:65px 0}.arch-stack{grid-template-columns:minmax(0,1fr);grid-template-areas:"apps" "bm" "onto" "gov" "ai" "src" "infra"}.arch-layer{grid-template-columns:minmax(0,1fr);gap:14px;padding:18px 16px}.arch-apps-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.arch-app-more{grid-column:1/-1}.arch-chips li{font-size:11px;padding:6px 10px}.arch-note{display:block}.arch-note span{display:block;margin-top:6px}}
